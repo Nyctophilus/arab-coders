@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="./app.js"></script>
+
+    <title>Level 1</title>
+  </head>
+  <body>
+    <main class="full">
+      <aside>
+        <button id="hide">hide</button>
+        <div draggable="true" id="square"></div>
+        <div draggable="true" id="trigle"></div>
+        <div draggable="true" id="circle"></div>
+      </aside>
+
+      <div class="container">
+        <div class="controller">
+          <div class="title">give me shapes</div>
+          <div class="hint">
+            pull the shapes inside the container
+          </div>
+        </div>
+
+        <section>
+          <input
+            type="range"
+            name="size"
+            id="size"
+            min=".5"
+            max="8"
+            step=".5"
+            value="5"
+          />
+          <span class="size-container">
+            size: <span id="size-value">5</span>
+          </span>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
