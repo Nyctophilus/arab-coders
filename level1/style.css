@@ -23,7 +23,8 @@ body {
 main {
   min-height: 100vh;
   margin-inline: calc(var(--sidebar-width) + 5dvw) 5dvw;
-  display: flex;
+  display: grid;
+  position: relative;
 
   &.full {
     width: clamp(300px, 70dvw, 1200px);
@@ -31,6 +32,9 @@ main {
 
     aside {
       width: 0dvw;
+      opacity: 0;
+    }
+    section {
       opacity: 0;
     }
   }
@@ -41,17 +45,17 @@ aside {
   background-color: var(--dark-blue);
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 1rem;
-  position: absolute;
+  position: fixed;
   left: 0;
   box-shadow: 3px 0px 50px -10px var(--main-clr);
   transition: width 0.5s ease-in-out,
     opacity 0.5s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: 10dvw;
   width: var(--sidebar-width);
+  display: grid;
+  grid-template-rows: 1fr 3fr;
+  justify-items: center;
+  align-items: center;
+  z-index: 99;
 
   button[id="hide"] {
     width: fit-content;
@@ -62,28 +66,44 @@ aside {
     border-radius: 1.25rem;
     font-size: 1.5rem;
     text-transform: capitalize;
+    margin-top: 15dvh;
+    user-select: none;
   }
 
   #circle,
   #square,
   #trigle {
-    background-color: var(--white);
+    background-color: var(--light-grey);
     width: var(--shape-size);
     aspect-ratio: 1;
     user-select: none;
     cursor: move;
-    transition: transform 0.4s ease;
+    position: absolute;
+    transition: transform 0.5s ease-out,
+      background-color 0.5s ease-out;
+    animation: mover 1s infinite alternate;
 
     &.drag {
-      transform: scale(0.9);
+      transform: scale(0.8);
+      background-color: var(--main-clr);
+      animation-play-state: paused;
+    }
+
+    &.intersecting {
+      animation-play-state: paused;
+      background-color: var(--dark-blue);
     }
   }
 
   #trigle {
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    animation-delay: 0.25s;
+    top: 30%;
   }
   #circle {
+    bottom: 30%;
     border-radius: 50%;
+    animation-delay: 0.5s;
   }
 }
 
@@ -155,6 +175,8 @@ aside {
     justify-content: space-around;
     row-gap: 1rem;
     align-items: center;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
 
     .size-container {
       text-transform: capitalize;
@@ -199,5 +221,14 @@ input[type="range"] {
   &:focus::-webkit-slider-runnable-track {
     border: 1px solid var(--black);
     background: var(--light-grey);
+  }
+}
+
+@keyframes mover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
   }
 }
