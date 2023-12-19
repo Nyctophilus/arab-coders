@@ -14,10 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
   inp.addEventListener("change", (e) => {
     size_val.innerText = e.target.value;
 
-    document.documentElement.style.setProperty(
-      "--shape-size",
-      `${e.target.value}rem`
-    );
+    const activeEl = searchForActiveElement()[0];
+    console.log(activeEl);
+
+    activeEl.style.width = `${e.target.value}rem`;
+    // document.documentElement.style.setProperty(
+    //   "--shape-size",
+    //   `${e.target.value}rem`
+    // );
   });
 
   con.addEventListener("click", () => {
@@ -50,6 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function elementDrag(e) {
+      resetActiveClass(draggableElements);
+      el.classList.add("active");
+
       el.classList.add("drag");
 
       e = e || window.Event;
@@ -93,4 +100,12 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.remove("intersecting");
     }
   }
+
+  const resetActiveClass = (els) =>
+    els.forEach((el) => el.classList.remove("active"));
+
+  const searchForActiveElement = () =>
+    draggableElements.filter((el) =>
+      el.classList.contains("active")
+    );
 });
